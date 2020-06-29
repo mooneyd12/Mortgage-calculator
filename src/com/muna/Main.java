@@ -1,6 +1,5 @@
 package com.muna;
 
-import java.sql.SQLOutput;
 import java.text.NumberFormat;
 import java.util.Scanner;
 
@@ -61,5 +60,7 @@ public class Main {
             String mortgageFormatted = currency.format(mortgage);
 
             System.out.println("Mortgage: " + mortgageFormatted);
+
+            scanner.close();
         }
     }
