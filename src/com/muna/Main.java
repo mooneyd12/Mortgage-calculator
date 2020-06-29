@@ -48,7 +48,7 @@ public class Main {
                 byte period = scanner.nextByte();
 
                 if (period >= 1 && period <= 30) {
-                    numberOfPayments = period / MONTHS_IN_YEAR;
+                    numberOfPayments = period * MONTHS_IN_YEAR;
                     break;
                 }
                 System.out.println("Enter a value between 1 and 30");
