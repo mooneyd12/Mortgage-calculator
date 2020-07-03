@@ -3,65 +3,79 @@ package com.muna;
 import java.text.NumberFormat;
 import java.util.Scanner;
 
+
 public class Main {
 
     public static void main(String[] args) {
 
+        //Constants
         final byte MONTHS_IN_YEAR = 12;
-        final byte PERCENT = 100;
-
-        int principal = 0;
-        float monthlyInterestRate = 0;
-        int numberOfPayments = 0;
-
+        final byte percent = 100;
         NumberFormat currency = NumberFormat.getCurrencyInstance();
 
-        //principal
-        Scanner scanner = new Scanner(System.in); //Create a scanner object
-        while (true) {
-            System.out.println("Principal: ");
-            principal = scanner.nextInt(); //Read user input and trim any whitespace
-            if (principal > 1_000 && principal < 1_000_000) {
-                System.out.println(principal);
-                break;
-            }
-            System.out.println("Enter a number between 1,000 and 1,000,000");
+        //Variables
+        int principal;
+        float annualInterestRate;
+        float monthlyInterestRate;
+        double numberOfPayments;
 
+        Scanner scanner = new Scanner(System.in);
+
+        //Principal
+        
+        while(true){ 
+            System.out.println("Principal: ");
+    
+            principal = scanner.nextInt();
+            if(principal > 1_0000 && principal < 1_000_000){ 
+                System.out.println("Your principal is " + principal);
+                break;
+            } 
+            System.out.println("Please enter a number between 1000 and 1,000,000.");
         }
 
-            //monthly interest rate
-            while (true) {
-                System.out.println("Annual interest rate: ");
-                float interestRate = scanner.nextFloat();
+        //Interest rate
+        while(true){ 
 
-                if (interestRate >= 1 && interestRate <= 30) {
-                    monthlyInterestRate = interestRate / PERCENT / MONTHS_IN_YEAR;
-                    break;
-                }
-                System.out.println("Enter a value greater than 0 and less than or equal to 30");
+            System.out.println("Annual Interest rate: ");
+    
+            annualInterestRate = scanner.nextFloat();
+    
+            monthlyInterestRate = annualInterestRate / MONTHS_IN_YEAR / percent;
+            if(annualInterestRate > 0 && annualInterestRate <= 25){
+                System.out.println("Your monthly interest rate will be: " + monthlyInterestRate);
+                break;
             }
+            System.out.println("The interest rate must be between 0 and 25 percent.");
+        }
 
 
-            //Period
-            while (true) {
-                System.out.println("Period: ");
-                byte period = scanner.nextByte();
+        //Period(years)
+        while(true){
+            System.out.println("Period(years): ");
+            double years = scanner.nextDouble();
+            
+            if(years >= 10 && years < 40){ 
+                numberOfPayments = years * MONTHS_IN_YEAR;
+                break;
+            } 
+            System.out.println("You must enter a number between 10 and 40.");
+        }   
 
-                if (period >= 1 && period <= 30) {
-                    numberOfPayments = period * MONTHS_IN_YEAR;
-                    break;
-                }
-                System.out.println("Enter a value between 1 and 30");
-            }
 
 
-            //Mortgage
-            double mortgage = principal*(monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+        //Mortgage
+        System.out.println("Mortgage: ");
 
-            String mortgageFormatted = currency.format(mortgage);
+        double mortgage = principal * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
 
-            System.out.println("Mortgage: " + mortgageFormatted);
+        String mortgageFormatted = currency.format(mortgage);
 
-            scanner.close();
+    
+        System.out.println("Your mortgage will be " + mortgageFormatted + " per month.");
+
+
+        scanner.close();
+
         }
     }
